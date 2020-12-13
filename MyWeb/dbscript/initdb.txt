@@ -1,0 +1,57 @@
+-- db_name sales_web
+
+-- ----------------------------
+-- Table structure for admin
+-- ----------------------------
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE `admin`  (
+  `id` int(2) NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `role` int(1) NOT NULL DEFAULT 1,
+  `status` bit(1) NOT NULL,
+  `created_date` timestamp(6) NOT NULL ON UPDATE CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for category
+-- ----------------------------
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category`  (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) ,
+  PRIMARY KEY (`id`) 
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of category
+-- ----------------------------
+INSERT INTO `category` VALUES (1, 'iphone');
+INSERT INTO `category` VALUES (2, 'samsung');
+
+-- ----------------------------
+-- Table structure for product
+-- ----------------------------
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(255) NOT NULL,
+  `description` varchar(255) ,
+  `product_image` varchar(255) ,
+  `price` decimal(20, 0) NOT NULL,
+  `quantity` int(5) NULL DEFAULT NULL,
+  `id_category` int(2) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) ,
+  FOREIGN KEY (`id_category`) REFERENCES category(`id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of product
+-- ----------------------------
+INSERT INTO `product` VALUES (1,'iphone 7','dien thoai xin ', 'null','10000','20',1);
+INSERT INTO `product` VALUES (2,'iphone 10','dien thoai ip 10 xin ', 'null','50000','20',1);
+INSERT INTO `product` VALUES (3,'samsung a10','dien thoai  sam sung a 10 xin ', 'null','120000','20',2);
+INSERT INTO `product` VALUES (4,'iphone 8s','dien thoai xin ', 'null','200000','20',1);
+

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Danh mục</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- endinject -->
+    <link rel="shortcut icon" th:href="@{/images/favicon.png}"/>
+
+</head>
+<body>
+
+<div class="container-scroller">
+
+
+    <div th:replace="~{/fragment/header_admin :: header_admin}"></div>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/products}">
+                        <span class="menu-title">Quản lý sản phẩm</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/categories}">
+                        <span class="menu-title">Quản lý danh mục</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/orders}">
+                        <span class="menu-title">Quản lý đơn hàng</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/chart}">
+                        <span class="menu-title">Biểu đồ</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1>Quản lý danh mục</h1>
+                    <form class="form-inline my-2 my-lg-0" th:action="@{/admin/categories}" th:object="${categoryname}"
+                          method="get">
+                        <input class="form-control mr-sm-2" th:field="*{name}" type="search" placeholder="Search"
+                               aria-label="Search">
+                        <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                    </form>
+                </div>
+                <h2 th:if="${vm.getKeyWord()}" th:text="${vm.getKeyWord()}"></h2>
+
+                <button type="button" class="btn btn-primary" id="new-category" data-toggle="modal"
+                        style="margin-bottom: 20px">
+                    Thêm mới danh mục
+                </button>
+
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-info">
+                                <tr>
+                                    <th colspan="1">
+                                        Index
+                                    </th>
+
+                                    <th colspan="3">
+                                        Tên danh mục
+                                    </th>
+                                    <th colspan="3">
+                                        Miêu tả
+                                    </th>
+                                    <th colspan="3">
+                                        Ngày tạo
+                                    </th>
+                                    <th colspan="1">
+                                        Action
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="category : ${vm.getCategoryVMList()}">
+                                    <td colspan="1" th:text="${category.getId()}"></td>
+                                    <td colspan="3" th:text="${category.getName()}"></td>
+                                    <td colspan="3" th:text="${category.getDescription()}"></td>
+                                    <td colspan="3" th:text="${category.getCreatedDate()}"></td>
+                                    <td colspan="2">
+                                        <i class="far fa-edit btn-edit-cate" title="Edit category"
+                                           th:attr="cateid=${category.getId()}" style="cursor: pointer"></i>
+                                        <i class="far fa-trash-alt btn-delete-cate" title="Delete category"
+                                           th:attr="cateid=${category.getId()}" style="cursor: pointer"></i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <nav style="margin-top: 50px" aria-label="..." th:if="${vm.getCategoryVMList().size()>0}">
+                    <ul class="pagination">
+                        <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                            <li class="page-item active" th:if="${page.number == i}" aria-current="page">
+                                <a class="page-link" th:href="${''}" th:text="${i+1}"><span class="sr-only"></span></a>
+                            </li>
+                            <li class="page-item"  th:unless="${page.number == i}"><a class="page-link" th:text="${i+1}"
+                                                                                      th:href="@{''(
+                                                                                        page= ${i},
+                                                                                        size = ${param.size},
+                                                                                        name = ${param.name}
+                                                                                      )}">
+
+                            </a></li>
+                        </th:block>
+                    </ul>
+                </nav>
+
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modal-create-cate" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Thêm mới danh mục</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group margin-bottom-15" style="margin-top: 20px">
+                                <label>Category name:</label>
+                                <input type="text" class="form-control" id="input-category-name">
+                            </div>
+
+                            <div class="form-group margin-bottom-15">
+                                <label>Category description:</label>
+                                <textarea type="text" class="form-control" id="input-category-desc"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary btn-save-category">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="modal-update-cate" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Cập nhật danh mục</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group margin-bottom-15" style="margin-top: 20px">
+                                <label>Category name:</label>
+                                <input type="text" class="form-control" id="input-cate-name-update">
+                            </div>
+
+                            <div class="form-group margin-bottom-15">
+                                <label>Category description:</label>
+                                <textarea type="text" class="form-control" id="input-cate-desc-update"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="btn-update-cate">Update changes</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <footer class="footer" th:replace="/fragment/footer_admin :: footer_admin"></footer>
+
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+<script th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
+<script th:src="@{/vendors/js/vendor.bundle.addons.js}"></script>
+<script th:src="@{/js/off-canvas.js}"></script>
+<script th:src="@{/js/misc.js}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+<script th:src="@{/js/admin-category.js}"></script>
+
+
+</body>
+</html>
