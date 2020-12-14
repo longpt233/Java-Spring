@@ -1,5 +1,7 @@
 package com.company.spring.entity;
 
+import java.util.ArrayList;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import antlr.collections.List;
 
 @Entity
 @Table(name = "product")
@@ -31,7 +35,7 @@ public class Product {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@Column
@@ -53,6 +57,8 @@ public class Product {
 	@ManyToOne
     @JoinColumn(name = "id_category")
     private Category category;
+	
+	private List<Category> listcategory=new ArrayList<>();
 
 	public Category getCategory() {
 		return category;

@@ -57,6 +57,15 @@ public class Category {
 	public List<Product> getProducts() {
 		return products;
 	}
+	
+	public String getProductName() {
+		StringBuilder res=new StringBuilder();
+		for(Product tmp:products) {
+			res.append(tmp.getProduct_name());
+			res.append(", ");
+		}
+		return res.toString();
+	}
 
 	public void setProducts(List<Product> products) {
 		this.products = products;

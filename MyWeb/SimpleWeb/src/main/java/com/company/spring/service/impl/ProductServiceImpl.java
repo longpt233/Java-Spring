@@ -27,20 +27,19 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public void addProduct(Product product) {
-		// TODO Auto-generated method stub
+		productRepo.save(product);
 		
 	}
 
 	@Override
-	public Product getById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Product getById(int id) {
+		return productRepo.getOne(id);
+		 
 	}
 
 	@Override
-	public void deleteById(long id) {
-		// TODO Auto-generated method stub
-		
+	public void deleteById(int id) {
+		productRepo.deleteById(id);
 	}
 
 	@Override
@@ -48,6 +47,12 @@ public class ProductServiceImpl implements ProductService{
 
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
 		return  productRepo.findAll(pageable);
+	}
+
+	@Override
+	public void update(Product product) {
+		productRepo.save(product);
+		
 	}
 
 }

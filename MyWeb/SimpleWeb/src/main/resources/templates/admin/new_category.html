@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>add new</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h1>Add New Category</h1>
+		<div class="row">
+			<!--  object tuong ung voi attribute gui len controller  -->
+			<form action="#" th:action="@{/admin/category/add/save}" th:object="${category}"
+				method="POST">
+
+				<!--  field tuong ung voi thuoc tinh trong Entity chu k phai giong trong db  -->
+				<div class="row">
+					<div class="form-group col-md-8">
+						<label for="name" class="col-form-label">Name</label> <input
+							type="text" th:field="*{name}" class="form-control"
+							placeholder="Name"> 
+					</div>
+					
+
+					<div class="col-md-6">
+						<input type="submit" class="btn btn-primary" value="Add Category">
+					</div>
+
+					<div class="form-group col-md-8"></div>
+
+				</div>
+			</form>
+
+			<hr>
+
+			<a th:href="@{/admin/home}"> Back to Home</a>
+		</div>
+</body>
+</html>
