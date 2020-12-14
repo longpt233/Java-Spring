@@ -6,11 +6,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class HomeController {
+public class CartController {
 
-  @RequestMapping("/home")
+  @RequestMapping("/cart")
   public ModelAndView listEmployee(ModelAndView model) throws IOException {
-    model.setViewName("client/home");
+    model.setViewName("client/cart");
+    return model;
+  }
+  
+  @RequestMapping("/checkout")
+  public ModelAndView checkOut(ModelAndView model) throws IOException {
+    model.setViewName("client/checkout");
     return model;
   }
 
