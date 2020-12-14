@@ -44,7 +44,7 @@ public class AdminProductController {
     return "admin/product/list";
   }
 
-  @PostMapping(value = "/product/add")
+  @PostMapping(value ="/product/add")
   public String saveFormAdd(@ModelAttribute("product") Product product) {
     System.out.println(" vao test save product" + product.toString());
     productService.addProduct(product);
