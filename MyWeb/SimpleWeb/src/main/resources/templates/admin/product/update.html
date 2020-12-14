@@ -10,10 +10,10 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Add New Product</h1>
+		<h1>Update Product</h1>
 		<div class="row">
 			<!--  object tuong ung voi attribute gui len controller  -->
-			<form action="#" th:action="@{/admin/product/add/save}" th:object="${product} "
+			<form action="#" th:action="@{/admin/product/edit/{id}(id=${product.id})}" th:object="${product}"
 				method="POST">
 
 				<!--  field tuong ung voi thuoc tinh trong Entity chu k phai giong trong db  -->
@@ -44,22 +44,17 @@
 							type="text" th:field="*{quantity}" class="form-control"
 							 placeholder="quantity"> 
 					</div>
-					 <div class="form-group col-md-8">
-					    <label >Example select</label>
-					  <select th:field="*{type.getId}">
-						  <option th:each="type : ${category}" 
-						          th:value="${type.getId()}" 
-						          th:text="#{${'seedstarter.type.' + type.getId()}}">Wireframe</option>
-						</select>
-					  </div>
 					<div class="form-group col-md-8">
-						<label for="phoneNo" class="col-form-label">category cai tinh tinh sau </label> <input
-							type="text" th:field="*{category}" class="form-control"
-							 placeholder="1"> 
+						<label for="phoneNo" class="col-form-label">category cai tinh tinh sau </label> 
+						<select th:field="*{category}">
+              <option th:each="type : ${category}" 
+                      th:value="${type.getId()}" 
+                      th:text="${ type.getName()}"></option>
+            </select>
 					</div>
 
 					<div class="col-md-6">
-						<input type="submit" class="btn btn-primary" value="Add Product">
+						<input type="submit" class="btn btn-primary" value="Update">
 					</div>
 
 					<div class="form-group col-md-8"></div>
