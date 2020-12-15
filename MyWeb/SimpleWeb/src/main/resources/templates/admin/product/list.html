@@ -3,19 +3,25 @@
 
 <head>
 
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Home Admin page</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Home Admin page</title>
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-		integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-	<link rel="stylesheet" th:href="@{/admin/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
-	<link rel="stylesheet" th:href="@{/admin/vendors/css/vendor.bundle.base.css}">
-	<link rel="stylesheet" th:href="@{/admin/css/style.css}">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	th:href="@{/admin/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+<link rel="stylesheet"
+	th:href="@{/admin/vendors/css/vendor.bundle.base.css}">
+<link rel="stylesheet" th:href="@{/admin/css/style.css}">
 
 </head>
 
@@ -31,18 +37,18 @@
 			<!-- partial:../../partials/_sidebar.html -->
 			<nav class="sidebar sidebar-offcanvas" id="sidebar">
 				<ul class="nav">
-					<li class="nav-item"><a class="nav-link" th:href="@{/admin/product}"> <span
-								class="menu-title">product</span>
-						</a></li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/admin/category}"> <span
-								class="menu-title">cate</span>
-						</a></li>
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/admin/product}"> <span class="menu-title">product</span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/admin/category}"> <span class="menu-title">cate</span>
+					</a></li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/order}">
 							<span class="menu-title">order</span>
-						</a></li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/admin/chart}"> <span
-								class="menu-title">chart</span>
-						</a></li>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/admin/chart}"> <span class="menu-title">chart</span>
+					</a></li>
 				</ul>
 			</nav>
 			<div class="main-panel">
@@ -52,8 +58,8 @@
 					<div class="card">
 
 						<div class="card-body">
-							<a th:href="@{/admin/product/add}" class="btn btn-primary btn-sm mb-3">
-								Add Product </a>
+							<a th:href="@{/admin/product/add}"
+								class="btn btn-primary btn-sm mb-3"> Add Product </a>
 							<table class="table table-bordered table-hover">
 								<thead class="table-info">
 									<tr>
@@ -73,10 +79,18 @@
 										<td colspan="2" th:text="${product.getProduct_name()}"></td>
 										<td colspan="2" th:text="${product.getCategory().getName()}"></td>
 										<td colspan="2" th:text="${product.getDescription()}"></td>
-										<td colspan="2"></td>
+										<!-- <td colspan="2"> <img th:src="${product.getProduct_image()}" alt=""></td>
+										 -->
+										<td colspan="2"><img
+											th:src="@{'/uploads/' + ${product.getProduct_image()}}" /></td>
+
 										<td colspan="1" th:text="${product.getPrice() + ' vnđ'}"></td>
-										<td><a th:href="@{/admin/product/edit/{id}(id=${product.id})}" class="btn btn-primary btn-sm">edit</i></a></td>
-                                        <td><a th:href="@{/admin/product/delete/{id}(id=${product.id})}" class="btn btn-primary btn-sm">delete</i></a></td>
+										<td><a
+											th:href="@{/admin/product/edit/{id}(id=${product.id})}"
+											class="btn btn-primary btn-sm">edit</i></a></td>
+										<td><a
+											th:href="@{/admin/product/delete/{id}(id=${product.id})}"
+											class="btn btn-primary btn-sm">delete</i></a></td>
 
 									</tr>
 								</tbody>
@@ -85,12 +99,12 @@
 							<div th:if="${totalPages > 1}">
 								<ul class="pagination">
 									<th:block th:each="i: ${#numbers.sequence(0, totalPages - 1)}">
-										<li class="page-item active" th:if="${currentPage == i+1}" aria-current="page">
-											<a class="page-link" th:text="${i+1}"><span class="sr-only"></span></a></li>
+										<li class="page-item active" th:if="${currentPage == i+1}"
+											aria-current="page"><a class="page-link"
+											th:text="${i+1}"><span class="sr-only"></span></a></li>
 										<li class="page-item" th:unless="${currentPage == i+1}"><a
-											class="page-link" th:text="${i+1}" th:href="@{/admin/product(page=${i+1})}">
-
-										</a></li>
+											class="page-link" th:text="${i+1}"
+											th:href="@{/admin/product(page=${i+1})}"> </a></li>
 									</th:block>
 								</ul>
 							</div>

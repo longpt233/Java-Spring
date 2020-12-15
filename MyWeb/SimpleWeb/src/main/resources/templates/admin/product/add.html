@@ -13,52 +13,60 @@
 		<h1>Add New Product</h1>
 		<div class="row">
 			<!--  object tuong ung voi attribute gui len controller va nhan ve ?  -->
-			<form action="#" th:action="@{/admin/product/add}" th:object="${product} "
-				method="POST">
+			<form action="#" th:action="@{/admin/product/add}"
+				th:object="${product} " method="POST" enctype="multipart/form-data">
+				<!--  cai enctype la cho up file  -->
 
 				<!--  field tuong ung voi thuoc tinh trong Entity chu k phai giong trong db  -->
 				<div class="row">
 					<div class="form-group col-md-8">
 						<label for="name" class="col-form-label">Name</label> <input
 							type="text" th:field="*{product_name}" class="form-control"
-							placeholder="Name"> 
+							placeholder="Name">
 					</div>
 					<div class="form-group col-md-8">
 						<label for="email" class="col-form-label">des </label> <input
-							type="text" th:field="*{description}" class="form-control" 
-							placeholder="description"> 
+							type="text" th:field="*{description}" class="form-control"
+							placeholder="description">
 					</div>
 
 					<div class="form-group col-md-8">
-						<label for="phoneNo" class="col-form-label">product_imageo</label> <input
-							type="text" th:field="*{product_image}" class="form-control"
-							 placeholder="product_image"> 
+						<label for="phoneNo" class="col-form-label">product_image</label>
+						<input type="text" th:field="*{product_image}"
+							class="form-control" placeholder="product_image">
 					</div>
+					<div>
+						
+
+								<label>Photos: </label> <input type="file" name="image"
+									accept="image/png, image/jpeg" />
+
+							
+					</div>
+
 					<div class="form-group col-md-8">
 						<label for="phoneNo" class="col-form-label">price</label> <input
 							type="text" th:field="*{price}" class="form-control"
-							 placeholder="price"> 
+							placeholder="price">
 					</div>
 					<div class="form-group col-md-8">
 						<label for="phoneNo" class="col-form-label">quantity</label> <input
 							type="text" th:field="*{quantity}" class="form-control"
-							 placeholder="quantity"> 
+							placeholder="quantity">
 					</div>
-					 <div class="form-group col-md-8">
-					    <label >Example select</label>
-					  <select th:field="*{category}">
-						  <option th:each="type : ${category}" 
-						          th:value="${type.getId()}" 
-						          th:text="${ type.getName()}"></option>
+					<div class="form-group col-md-8">
+						<label>Example select</label> <select th:field="*{category}">
+							<option th:each="type : ${category}" th:value="${type.getId()}"
+								th:text="${ type.getName()}"></option>
 						</select>
-					  </div>
-					  
-					  <!-- <div class="form-group col-md-8">
+					</div>
+
+					<!-- <div class="form-group col-md-8">
             <label for="phoneNo" class="col-form-label">category cai tinh tinh sau </label> <input
               type="text" th:field="*{category}" class="form-control"
                placeholder="1"> 
           </div> -->
-					
+
 
 					<div class="col-md-6">
 						<input type="submit" class="btn btn-primary" value="Add Product">
