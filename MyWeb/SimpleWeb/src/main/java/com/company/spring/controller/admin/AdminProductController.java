@@ -82,8 +82,12 @@ public class AdminProductController {
 	}
 
 	@PostMapping("product/edit/{id}")
-	public String updateStudent(@PathVariable("id") int id, @Valid Product product, Model model) {
+	public String updateStudent(@PathVariable("id") int id, @Valid Product product,@RequestParam("image") MultipartFile multipartFile, Model model) throws IOException {
+		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		product.setProduct_image(fileName);
 
+		String uploadDir = "product-photos/" ;		
+		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 		productService.update(product);
 		return "admin/home";
 	}

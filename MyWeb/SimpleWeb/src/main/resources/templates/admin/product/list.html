@@ -82,7 +82,7 @@
 										<!-- <td colspan="2"> <img th:src="${product.getProduct_image()}" alt=""></td>
 										 -->
 										<td colspan="2"><img
-											th:src="@{'/uploads/' + ${product.getProduct_image()}}" /></td>
+											th:src="@{${product.getPhotosImagePath()}}" /></td>
 
 										<td colspan="1" th:text="${product.getPrice() + ' vnđ'}"></td>
 										<td><a

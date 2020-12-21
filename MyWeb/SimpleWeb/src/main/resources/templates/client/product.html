@@ -48,8 +48,10 @@
 				<div th:each="product : ${list}" class="col-md-3 col-sm-6">
 					<div class="single-shop-product">
 						<div class="product-upper">
-							<img th:src="${product.getProduct_image()}" alt="">
+							<img th:src="@{${product.getPhotosImagePath()}}" alt="">
 						</div>
+						
+						
 						<h2>
 							<a href="" th:text="${product.getProduct_name()}"></a>
 						</h2>
