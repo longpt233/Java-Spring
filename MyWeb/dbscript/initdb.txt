@@ -1,20 +1,60 @@
 -- db_name sales_web
 
 -- ----------------------------
--- Table structure for admin
+-- Table structure for acc
 -- ----------------------------
-DROP TABLE IF EXISTS `admin`;
-CREATE TABLE `admin`  (
-  `id` int(2) NOT NULL AUTO_INCREMENT,
-  `name` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `username` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `role` int(1) NOT NULL DEFAULT 1,
-  `status` bit(1) NOT NULL,
-  `created_date` timestamp(6) NOT NULL ON UPDATE CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+DROP TABLE IF EXISTS `ACCOUNTS`;
+create table ACCOUNTS
+(
+  USER_NAME VARCHAR(20) not null,
+  ACTIVE    BIT not null,
+  ENCRYTED_PASSWORD  VARCHAR(128) not null,
+  USER_ROLE VARCHAR(20) not null,
+  PRIMARY KEY (USER_NAME)
+) ;
+insert into Accounts (USER_NAME, ACTIVE, ENCRYTED_PASSWORD, USER_ROLE)
+values ('admin', 1,
+'$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 'ADMIN');
 
+-- ----------------------------
+-- Table structure for custommer
+-- ----------------------------
+DROP TABLE IF EXISTS `ORDERS`;
+create table ORDERS
+(
+  ID               VARCHAR(50) not null PRIMARY KEY,
+  AMOUNT           double precision not null,
+  CUSTOMER_ADDRESS VARCHAR(255) not null,
+  CUSTOMER_EMAIL   VARCHAR(128) not null,
+  CUSTOMER_NAME    VARCHAR(255) not null,
+  CUSTOMER_PHONE   VARCHAR(128) not null,
+  ORDER_DATE       datetime not null,
+  ORDER_NUM        INTEGER not null UNIQUE
+) ;
+
+
+ 
+-- ----------------------------
+-- Table structure for order
+-- ----------------------------
+DROP TABLE IF EXISTS `ORDER_DETAILS`;
+create table ORDER_DETAILS
+(
+  ID         int not null ,
+  AMOUNT     double precision not null,
+  PRICE      double precision not null,
+  QUANITY    INTEGER not null,
+  ORDER_ID   VARCHAR(50) not null,
+  PRODUCT_ID int not null
+) ;
+alter table ORDER_DETAILS
+  add primary key (ID) ;
+alter table ORDER_DETAILS
+  add constraint ORDER_DETAIL_ORD_FK foreign key (ORDER_ID)
+  references ORDERS (ID);
+alter table ORDER_DETAILS
+  add constraint ORDER_DETAIL_PROD_FK foreign key (PRODUCT_ID)
+  references product (id);
 -- ----------------------------
 -- Table structure for category
 -- ----------------------------

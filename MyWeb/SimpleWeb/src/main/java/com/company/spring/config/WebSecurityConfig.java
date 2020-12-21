@@ -1,6 +1,5 @@
 package com.company.spring.config;
 
-//import org.o7planning.sbshoppingcart.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,12 +7,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.company.spring.service.impl.UserDetailsServiceImp;
  
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
    @Autowired
-   UserDetailsServiceImpl userDetailsService;
+   UserDetailsServiceImp userDetailsService;
  
    @Bean
    public BCryptPasswordEncoder passwordEncoder() {
@@ -37,11 +38,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
       // Requires login with role ROLE_EMPLOYEE or ROLE_MANAGER.
       // If not, it will redirect to /admin/login.
-      http.authorizeRequests().antMatchers("/admin/orderList", "/admin/order", "/admin/accountInfo")//
-            .access("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_MANAGER')");
+      http.authorizeRequests().antMatchers("/admin/home")//
+            .access("hasRole('ADMIN')");
  
       // Pages only for MANAGER
-      http.authorizeRequests().antMatchers("/admin/product").access("hasRole('ROLE_MANAGER')");
+      http.authorizeRequests().antMatchers("/admin/product").access("hasRole('ADMIN')");
  
       // When user login, role XX.
       // But access to the page requires the YY role,
@@ -54,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             //
             .loginProcessingUrl("/j_spring_security_check") // Submit URL
             .loginPage("/admin/login")//
-            .defaultSuccessUrl("/admin/accountInfo")//
+            .defaultSuccessUrl("/admin/home")//
             .failureUrl("/admin/login?error=true")//
             .usernameParameter("userName")//
             .passwordParameter("password")
