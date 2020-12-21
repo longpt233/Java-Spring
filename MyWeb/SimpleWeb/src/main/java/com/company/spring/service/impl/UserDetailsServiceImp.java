@@ -34,12 +34,13 @@ public class UserDetailsServiceImp implements UserDetailsService {
  
         // ADMIN ?
         String role = account.getUserRole();
+//        System.out.println("role ====="+role);
  
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
  
         // ADMIN
-        GrantedAuthority authority = new SimpleGrantedAuthority(role);
- 
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_"+role);
+//        System.out.println("rolAue ====="+authority.toString());
         grantList.add(authority);
  
         boolean enabled = account.isActive();

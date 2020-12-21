@@ -38,11 +38,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
       // Requires login with role ROLE_EMPLOYEE or ROLE_MANAGER.
       // If not, it will redirect to /admin/login.
-      http.authorizeRequests().antMatchers("/admin/home")//
+      http.authorizeRequests().antMatchers("/admin/home","/admin/product")//
             .access("hasRole('ADMIN')");
  
-      // Pages only for MANAGER
-      http.authorizeRequests().antMatchers("/admin/product").access("hasRole('ADMIN')");
+      // Pages only for MANAGER	
+//      http.authorizeRequests().antMatchers("/admin/product").access("hasRole('ADMIN')");
  
       // When user login, role XX.
       // But access to the page requires the YY role,
@@ -54,10 +54,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
             //
             .loginProcessingUrl("/j_spring_security_check") // Submit URL
-            .loginPage("/admin/login")//
-            .defaultSuccessUrl("/admin/home")//
-            .failureUrl("/admin/login?error=true")//
-            .usernameParameter("userName")//
+            .loginPage("/login")
+            .defaultSuccessUrl("/admin/product")
+            .failureUrl("/admin/login?error=true")
+            .usernameParameter("userName")
             .passwordParameter("password")
  
             // Configuration for the Logout page.
